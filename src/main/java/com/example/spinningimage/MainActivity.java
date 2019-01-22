@@ -19,15 +19,15 @@ import com.daimajia.androidanimations.library.YoYo;
 
 public class MainActivity extends Activity implements
         GestureDetector.OnGestureListener,
-        GestureDetector.OnDoubleTapListener{
+        GestureDetector.OnDoubleTapListener {
 
     private GestureDetectorCompat mDetector;
 
-    // Minimal x and y axis swipe distance.
+    // Min x and y axis swipe distance
     private static int MIN_SWIPE_DISTANCE_X = 10;
     private static int MIN_SWIPE_DISTANCE_Y = 10;
 
-    // Maximal x and y axis swipe distance.
+    // Max x and y axis swipe distance
     private static int MAX_SWIPE_DISTANCE_X = 1000;
     private static int MAX_SWIPE_DISTANCE_Y = 1000;
 
@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements
 
         super.onCreate(savedInstanceState);
 
-        mDetector = new GestureDetectorCompat(this,this);
+        mDetector = new GestureDetectorCompat(this, this);
 
         View.OnTouchListener listener = new View.OnTouchListener() {
             @Override
@@ -108,37 +108,37 @@ public class MainActivity extends Activity implements
         });
 
 
-        btnAxisRotation.setChecked(true);       //initial rotation type
+        btnAxisRotation.setChecked(true);       // Initial rotation type
 
         updateSpeedText();
 
 
-        deviceIsActive = true;  //spin the graphic at init
+        deviceIsActive = true;  // Spin the graphic at start
 
-        runnable = new Runnable()  {
+        runnable = new Runnable() {
             @Override
             public void run() {
                 int angle = 0;
 
                 ImageView image = (ImageView) findViewById(R.id.image);
 
-                while(angle <= 360) {
-                    //only rotate when the screen is active
+                while (angle <= 360) {
+                    // Only rotate when the screen is active
                     if (deviceIsActive == true) {
                         if ((RotationCircular == true) && (RotationAxis == false)) {
-                            image.setRotation(angle); //circular rotation
+                            image.setRotation(angle); // Circular rotation
                         } else if ((RotationAxis == true) && (RotationCircular == false)) {
-                            image.setRotationY(angle); //spinning on horizontal axis
+                            image.setRotationY(angle); // Spinning on horizontal axis
                         }
 
-                        //inc the angle of rotation each time
+                        // Inc the angle of rotation each time
                         angle = angle + 1;
                         if (angle >= 360) {
                             angle = 0;
                         }
                     }
 
-                    //sleep the thread for the length of the delay
+                    // Sleep the thread for the length of the delay
                     if (delay > 0) {
                         try {
                             Thread.sleep(delay);
@@ -159,17 +159,17 @@ public class MainActivity extends Activity implements
     @Override
     protected void onPause() {
         super.onPause();
-        deviceIsActive = false; //don't spin the graphic when the device is not active
+        deviceIsActive = false; // Don't spin the graphic when the device is not active
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        deviceIsActive = true; //spin the graphic now
+        deviceIsActive = true; // Spin the graphic now
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         if (this.mDetector.onTouchEvent(event)) {
             return true;
         }
@@ -208,10 +208,10 @@ public class MainActivity extends Activity implements
 
     @Override
     public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        if (v1 > 0){
-            // scroll up
+        if (v1 > 0) {
+            // Scroll up
         } else {
-            // scroll down
+            // Scroll down
         }
         return false;
     }
@@ -232,25 +232,24 @@ public class MainActivity extends Activity implements
         // Get absolute value
         float deltaXAbs = Math.abs(deltaX);
         float deltaYAbs = Math.abs(deltaY);
-        if((deltaYAbs >= MIN_SWIPE_DISTANCE_Y) && (deltaYAbs <= MAX_SWIPE_DISTANCE_Y))
-        {
+        if ((deltaYAbs >= MIN_SWIPE_DISTANCE_Y) && (deltaYAbs <= MAX_SWIPE_DISTANCE_Y)) {
 
-            if(deltaY > 0)  //swipe up
+            if (deltaY > 0)  // Swipe up
             {
-                if(delay > 0) {
+                if (delay > 0) {
 
-                    if(delay >= 20) {
+                    if (delay >= 20) {
                         delay = delay - 10;
-                    }else {
+                    } else {
                         delay = delay - 1;
                     }
                     updateSpeedText();
                 }
-            }else   //swipe down
+            } else   // Swipe down
             {
-                if(delay < 10) {
+                if (delay < 10) {
                     delay = delay + 1;
-                }else {
+                } else {
                     delay = delay + 10;
                 }
                 updateSpeedText();
@@ -260,8 +259,8 @@ public class MainActivity extends Activity implements
         return true;
     }
 
-    //update the speed text onscreen with an animation effect
-    private void updateSpeedText(){
+    // Update the speed text onscreen with an animation effect
+    private void updateSpeedText() {
         final TextView tv = (TextView) findViewById(R.id.speedText);
         tv.setText("Speed : " + delay);
 
